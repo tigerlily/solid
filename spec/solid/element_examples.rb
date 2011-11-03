@@ -16,6 +16,26 @@ shared_examples "a Solid element" do
 
   end
 
+  describe '.context_attribute' do
+
+    let(:element) do
+      described_class.context_attribute :current_user
+      element = described_class.new('name', 'ARGUMENTS_STRING', ['{% endname %}'])
+    end
+
+    it 'should define a custom accessor to the rendered context' do
+      element.stub(:current_context => {'current_user' => 'me'})
+      element.current_user.should be == 'me'
+    end
+
+    it 'should raise a Solid::ContextError if called outside render' do
+      expect{
+        element.current_user
+      }.to raise_error(Solid::ContextError)
+    end
+
+  end
+
   describe '#arguments' do
 
     it 'should instanciate a Solid::Arguments with his arguments_string' do

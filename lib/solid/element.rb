@@ -16,6 +16,17 @@ module Solid::Element
       @arguments
     end
 
+    def with_context(context)
+      @current_context = context
+      yield
+    ensure
+      @current_context = nil
+    end
+
+    def current_context
+      @current_context or raise Solid::ContextError.new("There is currently no context, do you forget to call render ?")
+    end
+
     def display(*args)
       raise NotImplementedError.new("#{self.class.name} subclasses SHOULD define a #display method")
     end
@@ -30,6 +41,12 @@ module Solid::Element
         Liquid::Template.register_tag(value, self)
       end
       @tag_name
+    end
+
+    def context_attribute(name)
+      define_method(name) do
+        current_context[name.to_s]
+      end
     end
 
   end

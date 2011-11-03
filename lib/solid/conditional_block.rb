@@ -3,8 +3,10 @@ class Solid::ConditionalBlock < Liquid::If
   include Solid::Element
 
   def render(context)
-    display(*arguments.parse(context)) do |condition_satisfied|
-      render_content(context, condition_satisfied)
+    with_context(context) do
+      display(*arguments.parse(context)) do |condition_satisfied|
+        render_content(context, condition_satisfied)
+      end
     end
   end
 
