@@ -14,6 +14,8 @@ end
 
 describe Solid::Block do
 
+  it_behaves_like "a Solid element"
+
   describe '#display' do
 
     let(:tokens) { ["dummy", "{% enddummy %}", "outside"] }
