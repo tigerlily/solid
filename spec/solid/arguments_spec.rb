@@ -71,6 +71,18 @@ describe Solid::Arguments do
         parse('myvar', {'myvar' => 'myvalue'}).should be == ['myvalue']
       end
 
+      it 'can call methods without arguments' do
+        parse('myvar.length', {'myvar' => ' myvalue '}).should be == [9]
+      end
+
+      it 'can call methods chain without arguments' do
+        parse('myvar.strip.length', {'myvar' => ' myvalue '}).should be == [7]
+      end
+
+      it 'can call predicate methods' do
+        parse('myvar.empty?', {'myvar' => ' myvalue '}).should be == [false]
+      end
+
       it 'should manage errors'
 
     end

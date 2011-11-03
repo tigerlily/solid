@@ -25,8 +25,11 @@ class Solid::Arguments
 
     # Floats
     return Float(arg) if arg =~ /^[\d\.]+$/
-    
-    return context[arg]
+
+    # Context var
+    var, *methods = arg.split('.')
+    object = context[var]
+    return methods.inject(object) { |obj, method| obj.public_send(method) }
   end
 
   def parse(context)
