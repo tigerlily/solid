@@ -1,4 +1,4 @@
-class Solid::Tag < Liquid::Tag
+class Solid::Block < Liquid::Block
 
   class << self
 
@@ -18,7 +18,9 @@ class Solid::Tag < Liquid::Tag
   end
 
   def render(context)
-    display(*@arguments.parse(context))
+    display(*@arguments.parse(context)) do
+      super
+    end
   end
 
   def display(*args)
