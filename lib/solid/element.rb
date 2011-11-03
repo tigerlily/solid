@@ -38,7 +38,7 @@ module Solid::Element
     def tag_name(value=nil)
       if value
         @tag_name = value
-        Liquid::Template.register_tag(value, self)
+        Liquid::Template.register_tag(value.to_s, self)
       end
       @tag_name
     end
