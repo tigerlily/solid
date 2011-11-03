@@ -21,4 +21,19 @@ describe Solid::Tag do
     subject.render('myvar' => 'bar').should be == 'result'
   end
 
+  describe '.name' do
+
+    it 'should register tag to Liquid with given name' do
+      Liquid::Template.should_receive(:register_tag).with('dummy', DummyTag)
+      DummyTag.name 'dummy'
+    end
+
+    it 'should return previously given name' do
+      Liquid::Template.stub(:register_tag)
+      DummyTag.name 'dummy'
+      DummyTag.name.should be == 'dummy'
+    end
+
+  end
+
 end
