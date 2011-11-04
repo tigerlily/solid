@@ -14,7 +14,7 @@ module Solid
   class << self
 
     def unproxify(object)
-      if object.class.name.end_with('::LiquidDropClass')
+      if object.class.name.end_with?('::LiquidDropClass')
         return object.instance_variable_get('@object')
       end
       object
