@@ -10,4 +10,16 @@ module Solid
   autoload :Element,          File.join(BASE_PATH, 'element')
   autoload :Tag,              File.join(BASE_PATH, 'tag')
   autoload :VERSION,          File.join(BASE_PATH, 'version')
+
+  class << self
+
+    def unproxify(object)
+      if object.class.name.end_with('::LiquidDropClass')
+        return object.instance_variable_get('@object')
+      end
+      object
+    end
+
+  end
+
 end

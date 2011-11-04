@@ -28,7 +28,7 @@ class Solid::Arguments
 
     # Context var
     var, *methods = arg.split('.')
-    object = context[var]
+    object = Solid.unproxify(context[var])
     return methods.inject(object) { |obj, method| obj.public_send(method) }
   end
 

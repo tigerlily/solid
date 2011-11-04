@@ -45,7 +45,7 @@ module Solid::Element
 
     def context_attribute(name)
       define_method(name) do
-        current_context[name.to_s]
+        Solid.unproxyfy(current_context[name.to_s])
       end
     end
 
