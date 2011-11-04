@@ -28,8 +28,8 @@ class Solid::Arguments
 
     # Context var
     var, *methods = arg.split('.')
-    object = Solid.unproxify(context[var])
-    return methods.inject(object) { |obj, method| obj.public_send(method) }
+    object = context[var]
+    return Solid.unproxify(methods.inject(object) { |obj, method| obj.public_send(method) })
   end
 
   def parse(context)
