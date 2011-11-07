@@ -23,8 +23,7 @@ describe Solid::Arguments do
       end
 
       it 'should not be disturbed by a string containing a comma' do
-        pending('because for now we are lazy bastards')
-        parse('"foo,bar"').should be == ['foo,bar']
+        parse(%{"foo,bar", 'egg,spam'}).should be == ['foo,bar', 'egg,spam']
       end
 
       it 'should not be disturbed by a string containing a simple quote' do
