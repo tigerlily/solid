@@ -100,6 +100,10 @@ describe Solid::Arguments do
         parse('foo:bar', {'bar' => 'baz'}).should be == [{foo: 'baz'}]
       end
 
+      it "should not be disturbed by a comma into a named string" do
+        parse('foo:"bar,baz"').should be == [{foo: 'bar,baz'}]
+      end
+
     end
 
   end
