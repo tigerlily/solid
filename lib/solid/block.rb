@@ -4,7 +4,7 @@ class Solid::Block < Liquid::Block
 
   def render(context)
     with_context(context) do
-      display(*arguments.parse(context)) do
+      display(*arguments.interpolate(context)) do
         super
       end
     end

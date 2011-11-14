@@ -39,7 +39,7 @@ shared_examples "a Solid element" do
   describe '#arguments' do
 
     it 'should instanciate a Solid::Arguments with his arguments_string' do
-      Solid::Arguments.should_receive(:new).with('ARGUMENTS_STRING')
+      Solid::Arguments.should_receive(:parse).with('ARGUMENTS_STRING')
       described_class.new('name', 'ARGUMENTS_STRING', ['{% endname %}'])
     end
 

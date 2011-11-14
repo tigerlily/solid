@@ -4,7 +4,7 @@ class Solid::ConditionalBlock < Liquid::If
 
   def render(context)
     with_context(context) do
-      display(*arguments.parse(context)) do |condition_satisfied|
+      display(*arguments.interpolate(context)) do |condition_satisfied|
         render_content(context, condition_satisfied)
       end
     end

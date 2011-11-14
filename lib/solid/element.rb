@@ -9,7 +9,7 @@ module Solid::Element
 
     def initialize(tag_name, arguments_string, tokens)
        super
-       @arguments = Solid::Arguments.new(arguments_string)
+       @arguments = Solid::Arguments.parse(arguments_string)
     end
 
     def arguments

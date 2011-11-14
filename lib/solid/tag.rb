@@ -4,7 +4,7 @@ class Solid::Tag < Liquid::Tag
 
   def render(context)
     with_context(context) do
-      display(*arguments.parse(context))
+      display(*arguments.interpolate(context))
     end
   end
 

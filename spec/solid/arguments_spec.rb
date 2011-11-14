@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Solid::Arguments do
 
   def parse(string, context={})
-    Solid::Arguments.new(string).parse(context)
+    Solid::Arguments.parse(string).interpolate(context)
   end
 
   context 'with a single argument' do
@@ -72,6 +72,10 @@ describe Solid::Arguments do
 
       it 'can call methods without arguments' do
         parse('myvar.length', {'myvar' => ' myvalue '}).should be == [9]
+      end
+
+      it 'can evaluate context var deeply unclosed in collections' do
+        parse('[{1 => [{2 => myvar}]}]', {'myvar' => 'myvalue'}).first.should be == [{1 => [{2 => 'myvalue'}]}]
       end
 
       it 'can call methods chain without arguments' do
