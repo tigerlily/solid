@@ -20,7 +20,7 @@ class Solid::Template < Liquid::Template
   def walk(nodes=nil, &block)
     (nodes || root.nodelist).each do |node|
       yield node
-      walk(node.nodelist, &block) if node.respond_to?(:nodelist)
+      walk(node.nodelist || [], &block) if node.respond_to?(:nodelist)
     end
   end
 

@@ -22,13 +22,13 @@ describe Solid::Template do
       end
      end
 
+     let(:yielded_classes) { yielded_nodes.map(&:class) }
+
     it 'should yield parent nodes before child nodes' do
-      yielded_classes = yielded_nodes.map(&:class)
       yielded_classes.index(Liquid::Comment).should be < yielded_classes.index(Liquid::If)
     end
 
     it 'should yield first sibling first (No ! really ? ...)' do
-      yielded_classes = yielded_nodes.map(&:class)
       yielded_classes.index(Liquid::Comment).should be < yielded_classes.index(Liquid::Unless)
     end
 
