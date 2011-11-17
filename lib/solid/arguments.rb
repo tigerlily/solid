@@ -43,11 +43,12 @@ class Solid::Arguments
 
   def parser
     @@parser ||= Parsr.new(
-      Solid::Arguments::ConstantsRule,
+      Parsr::ConstantsRule,
       Solid::Arguments::ContextVariableRule,
       Parsr::ArrayRule,
       Parsr::HashRule,
       Parsr::SymbolRule,
+      Parsr::RangeRule,
       Parsr::FloatRule,
       Parsr::IntegerRule,
       Parsr::RawStringRule,
