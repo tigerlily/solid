@@ -16,6 +16,11 @@ class Solid::Template < Liquid::Template
     self.walk(&block)
   end
 
+  # Avoid issues with ActiveSupport::Cache which freeze all objects passed to it like an ass
+  # And anyway once frozen Liquid::Templates are unable to render anything
+  def freeze
+  end
+
   protected
   def walk(nodes=nil, &block)
     (nodes || root.nodelist).each do |node|
