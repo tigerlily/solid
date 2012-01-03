@@ -29,7 +29,7 @@ module Solid::Element
     end
 
     def display(*args)
-      raise NotImplementedError.new("#{self.class.name} subclasses SHOULD define a #display method")
+      raise NotImplementedError.new("Solid::Element implementations SHOULD define a #display method")
     end
     
   end
