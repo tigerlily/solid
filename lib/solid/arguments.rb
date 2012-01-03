@@ -42,18 +42,12 @@ class Solid::Arguments
   end
 
   def parser
-    @@parser ||= Parsr.new(
-      Parsr::ConstantsRule,
-      Solid::Arguments::ContextVariableRule,
-      Parsr::ArrayRule,
-      Parsr::HashRule,
-      Parsr::SymbolRule,
-      Parsr::RangeRule,
-      Parsr::FloatRule,
-      Parsr::IntegerRule,
-      Parsr::RawStringRule,
-      Parsr::StringRule
-    )
+    unless defined?(@@parser)
+      rules = Parsr::Rules::All.dup
+      rules.insert(Parsr::Rules::All.index(Parsr::Rules::Constants) + 1, Solid::Arguments::ContextVariableRule)
+      @@parser = Parsr.new(*rules)
+    end
+    @@parser
   end
 
   class ContextVariable < Struct.new(:name)
@@ -62,24 +56,6 @@ class Solid::Arguments
       var, *methods = name.split('.')
       object = context[var]
       return Solid.unproxify(methods.inject(object) { |obj, method| obj.public_send(method) })
-    end
-
-  end
-
-  module ConstantsRule
-
-    class << self
-
-      def match(scanner)
-        if scanner.scan(/nil/)
-          return Parsr::Token.new(nil)
-        elsif scanner.scan(/true/)
-          return Parsr::Token.new(true)
-        elsif scanner.scan(/false/)
-          return Parsr::Token.new(false)
-        end
-      end
-
     end
 
   end
