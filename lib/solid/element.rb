@@ -3,6 +3,7 @@ module Solid::Element
   def self.included(base)
     base.extend(ClassMethods)
     base.send(:include, InstanceMethods)
+    base.send(:include, Solid::Iterable)
   end
 
   module InstanceMethods

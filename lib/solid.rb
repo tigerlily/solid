@@ -9,6 +9,7 @@ module Solid
   autoload :ConditionalBlock, File.join(BASE_PATH, 'conditional_block')
   autoload :ContextError,     File.join(BASE_PATH, 'context_error')
   autoload :Element,          File.join(BASE_PATH, 'element')
+  autoload :Iterable,         File.join(BASE_PATH, 'iterable')
   autoload :Tag,              File.join(BASE_PATH, 'tag')
   autoload :Template,         File.join(BASE_PATH, 'template')
   autoload :VERSION,          File.join(BASE_PATH, 'version')
