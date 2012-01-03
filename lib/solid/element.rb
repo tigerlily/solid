@@ -18,10 +18,11 @@ module Solid::Element
     end
 
     def with_context(context)
+      previous_context = @current_context
       @current_context = context
       yield
     ensure
-      @current_context = nil
+      @current_context = previous_context
     end
 
     def current_context
