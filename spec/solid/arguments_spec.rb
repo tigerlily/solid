@@ -93,19 +93,19 @@ describe Solid::Arguments do
     context 'of type "named parameter"' do
 
       it 'should be able to parse a string' do
-        parse('foo:"bar"').should be == [{foo: 'bar'}]
+        parse('foo:"bar"').should be == [{:foo => 'bar'}]
       end
 
       it 'should be able to parse an int' do
-        parse('foo:42').should be == [{foo: 42}]
+        parse('foo:42').should be == [{:foo => 42}]
       end
 
       it 'should be able to parse a context var' do
-        parse('foo:bar', {'bar' => 'baz'}).should be == [{foo: 'baz'}]
+        parse('foo:bar', {'bar' => 'baz'}).should be == [{:foo => 'baz'}]
       end
 
       it "should not be disturbed by a comma into a named string" do
-        parse('foo:"bar,baz"').should be == [{foo: 'bar,baz'}]
+        parse('foo:"bar,baz"').should be == [{:foo => 'bar,baz'}]
       end
 
     end
@@ -116,12 +116,12 @@ describe Solid::Arguments do
 
     it 'should return 3 arguments and an option hash' do
       args = parse('1, "2", myvar, myopt:false', {'myvar' => 4.2})
-      args.should be == [1, '2', 4.2, {myopt: false}]
+      args.should be == [1, '2', 4.2, {:myopt => false}]
     end
 
     it 'should be tolerent about whitespaces around commas and colons' do
       args = parse("    1\t, '2'  ,myvar, myopt: false", {'myvar' => 4.2})
-      args.should be == [1, '2', 4.2, {myopt: false}]
+      args.should be == [1, '2', 4.2, {:myopt => false}]
     end
 
   end

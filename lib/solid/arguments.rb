@@ -55,7 +55,15 @@ class Solid::Arguments
     def evaluate(context)
       var, *methods = name.split('.')
       object = context[var]
-      return Solid.unproxify(methods.inject(object) { |obj, method| obj.public_send(method) })
+      object = methods.inject(object) do |obj, method|
+        if obj.respond_to?(:public_send)
+          obj.public_send(method)
+        else # 1.8 fallback
+          obj.send(method) if obj.respond_to?(method, false)
+        end
+      end
+      
+      return Solid.unproxify(object)
     end
 
   end
