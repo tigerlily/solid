@@ -14,6 +14,10 @@ module Solid
   autoload :Template,         File.join(BASE_PATH, 'template')
   autoload :VERSION,          File.join(BASE_PATH, 'version')
 
+  if defined?(Rails)
+    require File.join(BASE_PATH, 'engine')
+  end
+
   class << self
 
     def unproxify(object)
