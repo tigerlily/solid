@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "solid/version"
 
 Gem::Specification.new do |s|
-  s.name        = "solid"
+  s.name        = "tigerlily-solid"
   s.version     = Solid::VERSION
   s.authors     = ["Jean Boussier", "Yannick François"]
   s.email       = ["jean.boussier@tigerlilyapps.com", "yannick@tigerlilyapps.com"]
