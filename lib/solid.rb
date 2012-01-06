@@ -14,7 +14,8 @@ module Solid
   autoload :Template,         File.join(BASE_PATH, 'template')
   autoload :VERSION,          File.join(BASE_PATH, 'version')
 
-  if defined?(Rails)
+  if defined?(Rails) # Rails only features
+    autoload :ModelDrop,      File.join(BASE_PATH, 'model_drop')
     require File.join(BASE_PATH, 'engine')
   end
 
