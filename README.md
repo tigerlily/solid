@@ -2,6 +2,14 @@
 
 Solid aim to provide a easier and nicer API to create custom Liquid tags and blocks
 
+## Installation
+
+Due to a name conflict the gem is called tigerlily-solid. So to use it:
+
+```
+gem 'tigerlily-solid', :require => 'solid'
+```
+
 ## Tags
 
 To create a new tag, you just have to:
@@ -114,7 +122,7 @@ Conditional blocks are blocks with two bodies. If you yield `true` you will rece
 and if you yield `false` you will receive the else block:
 
 ```ruby
-class IfAuthorizedToTag < Solid::ConditionalTag
+class IfAuthorizedToTag < Solid::ConditionalBlock
 
   tag_name :if_authorized_to
 
@@ -135,4 +143,8 @@ end
 {% endif_authorized_to %}
 ```
 
+## License
 
+Solid is released under the MIT license:
+
+http://www.opensource.org/licenses/MIT
