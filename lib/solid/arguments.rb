@@ -54,16 +54,18 @@ class Solid::Arguments
 
     def evaluate(context)
       var, *methods = name.split('.')
-      object = context[var]
-      object = methods.inject(object) do |obj, method|
-        if obj.respond_to?(:public_send)
-          obj.public_send(method)
-        else # 1.8 fallback
-          obj.send(method) if obj.respond_to?(method, false)
-        end
-      end
-      
+      object = methods.inject(context[var]) { |obj, method| pluck(obj, method) }
       return Solid.unproxify(object)
+    end
+
+    def pluck(object, method)
+      if object.respond_to?(method, false) # do not include private methods
+        object.public_send(method)
+      elsif object.respond_to?(:invoke_drop)
+        object.invoke_drop(method)
+      elsif object.respond_to?(:[]) && object.respond_to?(:has_key?) && object.has_key?(method)
+        object[method]
+      end.to_liquid
     end
 
   end

@@ -2,8 +2,16 @@ require 'spec_helper'
 
 describe Solid::Arguments do
 
+  class DummyDrop < Liquid::Drop
+
+    def before_method(name)
+      "dummy #{name}"
+    end
+
+  end
+
   def parse(string, context={})
-    Solid::Arguments.parse(string).interpolate(context)
+    Solid::Arguments.parse(string).interpolate(Liquid::Context.new(context))
   end
 
   context 'with a single argument' do
@@ -71,6 +79,7 @@ describe Solid::Arguments do
       end
 
       it 'can call methods without arguments' do
+        debugger
         parse('myvar.length', {'myvar' => ' myvalue '}).should be == [9]
       end
 
@@ -84,6 +93,14 @@ describe Solid::Arguments do
 
       it 'can call predicate methods' do
         parse('myvar.empty?', {'myvar' => ' myvalue '}).should be == [false]
+      end
+
+      it 'can get a hash value' do
+        parse('myvar.mykey', {'myvar' => {'mykey' => 'myvalue'}}).should be == ['myvalue']
+      end
+
+      it 'can fallback on Liquid::Drop#before_method' do
+        parse('myvar.mymethod', {'myvar' => DummyDrop.new}).should be == ['dummy mymethod']
       end
 
       it 'should manage errors'
