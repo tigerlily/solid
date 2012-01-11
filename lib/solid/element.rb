@@ -2,37 +2,32 @@ module Solid::Element
 
   def self.included(base)
     base.extend(ClassMethods)
-    base.send(:include, InstanceMethods)
     base.send(:include, Solid::Iterable)
   end
 
-  module InstanceMethods
+  def initialize(tag_name, arguments_string, tokens)
+     super
+     @arguments = Solid::Arguments.parse(arguments_string)
+  end
 
-    def initialize(tag_name, arguments_string, tokens)
-       super
-       @arguments = Solid::Arguments.parse(arguments_string)
-    end
+  def arguments
+    @arguments
+  end
 
-    def arguments
-      @arguments
-    end
+  def with_context(context)
+    previous_context = @current_context
+    @current_context = context
+    yield
+  ensure
+    @current_context = previous_context
+  end
 
-    def with_context(context)
-      previous_context = @current_context
-      @current_context = context
-      yield
-    ensure
-      @current_context = previous_context
-    end
+  def current_context
+    @current_context or raise Solid::ContextError.new("There is currently no context, do you forget to call render ?")
+  end
 
-    def current_context
-      @current_context or raise Solid::ContextError.new("There is currently no context, do you forget to call render ?")
-    end
-
-    def display(*args)
-      raise NotImplementedError.new("Solid::Element implementations SHOULD define a #display method")
-    end
-    
+  def display(*args)
+    raise NotImplementedError.new("Solid::Element implementations SHOULD define a #display method")
   end
 
   module ClassMethods
