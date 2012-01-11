@@ -14,6 +14,14 @@ describe Solid::Arguments do
     Solid::Arguments.parse(string).interpolate(Liquid::Context.new(context))
   end
 
+  context 'with no arguments' do
+
+    it "parses as an empty array" do
+      parse('').should be == []
+    end
+
+  end
+
   context 'with a single argument' do
 
     context 'of type string' do
@@ -79,7 +87,6 @@ describe Solid::Arguments do
       end
 
       it 'can call methods without arguments' do
-        debugger
         parse('myvar.length', {'myvar' => ' myvalue '}).should be == [9]
       end
 
@@ -123,6 +130,15 @@ describe Solid::Arguments do
 
       it "should not be disturbed by a comma into a named string" do
         parse('foo:"bar,baz"').should be == [{:foo => 'bar,baz'}]
+      end
+
+      it "should support a mix of types" do
+        parse('foo:"bar",bar:42, baz:true, egg:spam', {'spam' => 'egg'}).should be == [{
+          foo: 'bar',
+          bar: 42,
+          baz: true,
+          egg: 'egg',
+        }]
       end
 
     end
