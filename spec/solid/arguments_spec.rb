@@ -46,7 +46,7 @@ describe Solid::Arguments do
 
     context 'of type integer' do
 
-      it 'should works' do
+      it 'should work' do
         parse('42').should be == [42]
       end
 
@@ -54,7 +54,7 @@ describe Solid::Arguments do
 
     context 'of type float' do
 
-      it 'should works' do
+      it 'should work' do
         parse('4.2').should be == [4.2]
       end
 
@@ -62,11 +62,11 @@ describe Solid::Arguments do
 
     context 'of type boolean' do
 
-      it 'should works with `true`' do
+      it 'should work with `true`' do
         parse('true').should be == [true]
       end
 
-      it 'should works with `false`' do
+      it 'should work with `false`' do
         parse('false').should be == [false]
       end
 
@@ -74,7 +74,7 @@ describe Solid::Arguments do
 
     context 'of type "context var"' do
 
-      it 'should works' do
+      it 'should work' do
         parse('myvar', {'myvar' => 'myvalue'}).should be == ['myvalue']
       end
 
@@ -136,7 +136,7 @@ describe Solid::Arguments do
       args.should be == [1, '2', 4.2, {:myopt => false}]
     end
 
-    it 'should be tolerent about whitespaces around commas and colons' do
+    it 'should be tolerant about whitespace around commas and colons' do
       args = parse("    1\t, '2'  ,myvar, myopt: false", {'myvar' => 4.2})
       args.should be == [1, '2', 4.2, {:myopt => false}]
     end
