@@ -20,18 +20,18 @@ describe Solid::Block do
 
     let(:tokens) { ["dummy", "{% enddummy %}", "outside"] }
 
-    subject{ DummyBlock.new('dummy', 'yield', tokens) }
+    subject{ DummyBlock.new('dummy', 'condition', tokens) }
 
     it 'yielding should render the block content' do
-      subject.render('yield' => true).should be == 'dummy'
+      subject.render('condition' => true).should be == 'dummy'
     end
 
     it 'should only render until the {% endblock %} tag' do
-      subject.render('yield' => true).should_not include('outside')
+      subject.render('condition' => true).should_not include('outside')
     end
 
     it 'should not render its content if it do not yield' do
-      subject.render('yield' => false).should_not include('dummy')
+      subject.render('condition' => false).should_not include('dummy')
     end
 
   end

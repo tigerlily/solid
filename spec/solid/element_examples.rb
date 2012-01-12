@@ -20,6 +20,7 @@ shared_examples "a Solid element" do
 
     let(:element) do
       described_class.context_attribute :current_user
+      Solid::Arguments.stub(:parse).with('ARGUMENTS_STRING')
       element = described_class.new('name', 'ARGUMENTS_STRING', ['{% endname %}'])
     end
 
@@ -44,7 +45,7 @@ shared_examples "a Solid element" do
     end
 
     it 'should store his Solid:Arguments instance' do
-      element = described_class.new('name', 'ARGUMENTS_STRING', ['{% endname %}'])
+      element = described_class.new('name', '1', ['{% endname %}'])
       element.arguments.should be_a(Solid::Arguments)
     end
 
@@ -53,6 +54,7 @@ shared_examples "a Solid element" do
   describe '#display' do
 
     it 'should force developper to define it in child class' do
+      Solid::Arguments.stub(:parse).with('ARGUMENTS_STRING')
       element = described_class.new('name', 'ARGUMENTS_STRING', ['{% endname %}'])
       expect{
         element.display

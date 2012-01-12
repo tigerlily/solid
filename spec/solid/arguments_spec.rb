@@ -90,6 +90,18 @@ describe Solid::Arguments do
         parse('myvar.length', {'myvar' => ' myvalue '}).should be == [9]
       end
 
+      it 'can call methods without arguments on immediate values' do
+        parse('"foobar".length').should be == [6]
+      end
+
+      it 'can call a method with arguments' do
+        parse('myvar.split(",", 2)', {'myvar' => 'foo,bar'}).should be == [%w(foo bar)]
+      end
+
+      it 'can call a method with context var arguments' do
+        parse('myvar.split(myseparator, 2)', {'myvar' => 'foo,bar', 'myseparator' => ','}).should be == [%w(foo bar)]
+      end
+
       it 'can evaluate context var deeply unclosed in collections' do
         parse('[{1 => [{2 => myvar}]}]', {'myvar' => 'myvalue'}).first.should be == [{1 => [{2 => 'myvalue'}]}]
       end

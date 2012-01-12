@@ -3,6 +3,7 @@ require 'liquid'
 module Solid
   BASE_PATH = File.join(File.expand_path(File.dirname(__FILE__)), 'solid')
 
+  require File.join(BASE_PATH, 'extensions')
   autoload :Argument,         File.join(BASE_PATH, 'argument')
   autoload :Arguments,        File.join(BASE_PATH, 'arguments')
   autoload :Block,            File.join(BASE_PATH, 'block')
