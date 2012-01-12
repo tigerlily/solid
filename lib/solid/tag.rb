@@ -4,7 +4,7 @@ class Solid::Tag < Liquid::Tag
 
   def render(context)
     with_context(context) do
-      display(*arguments.interpolate(context))
+      display(*arguments.interpolate(context).map(&Solid.method(:unproxify)))
     end
   end
 
