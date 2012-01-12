@@ -26,6 +26,10 @@ describe Solid::Arguments do
 
     context 'of type string' do
 
+      it 'can parse a constant' do
+        parse("FooBar", {'FooBar' => 42}).should be == [42]
+      end
+
       it 'can parse a simple string (between simple quotes)' do
         parse("'foobar'").should be == ['foobar']
       end

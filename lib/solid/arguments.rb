@@ -182,6 +182,12 @@ class Solid::Arguments
       ContextVariable.new identifier
     end
 
+    # # Spam
+    # "Spam", [1, 23]
+    def handle_const(constant, lineno_column)
+      ContextVariable.new constant
+    end
+
     # # 42
     # "42", [1, 2]
     def handle_int(int, lineno_column)
