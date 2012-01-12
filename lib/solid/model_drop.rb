@@ -51,8 +51,8 @@ class Solid::ModelDrop < Liquid::Drop
       @allowed_scopes = scopes
       scopes.each do |scope_name|
         self.class_eval <<-END_EVAL, __FILE__, __LINE__ + 1
-          def #{scope_name}
-            @scope = scope.public_send(:#{scope_name})
+          def #{scope_name}(*args)
+            @scope = scope.public_send(:#{scope_name}, *args)
           end
         END_EVAL
         self.immutable_method(scope_name)
@@ -78,7 +78,7 @@ class Solid::ModelDrop < Liquid::Drop
     scope.each(&block)
   end
 
-  def before_method(method_name)
+  def before_method(method_name, *args)
     self.class.dynamic_methods.each do |pattern, method|
       if match_data = pattern.match(method_name)
         return self.send(method, *match_data[1..-1])
