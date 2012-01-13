@@ -54,17 +54,23 @@ class Solid::Parser
 
   end
 
+  class << self
+
+    def parse(string)
+      new(string).parse
+    end
+
+  end
+
   def initialize(string)
-    @string = "[#{string}]"
+    @string = string
     @sexp = nil
   end
 
   def parse
     @sexp = Ripper.sexp(@string)
     dive_in or raise 'Ripper changed?'
-    @sexp.map do |argument|
-      parse_one(argument)
-    end
+    parse_one(@sexp)
   end
 
   # Looks for a structure like
@@ -73,7 +79,6 @@ class Solid::Parser
   def dive_in
     @sexp = @sexp[1]
     @sexp = @sexp.first
-    @sexp = @sexp[1] || []
   end
 
   def parse_one(argument)
@@ -153,7 +158,7 @@ class Solid::Parser
   # # [1]
   # [[:@int, "1", [1, 1]]
   def handle_array(array)
-    LiteralArray.new array.map(&method(:parse_one))
+    LiteralArray.new (array || []).map(&method(:parse_one))
   end
 
   # # (1)

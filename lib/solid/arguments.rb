@@ -4,7 +4,7 @@ class Solid::Arguments
   include Enumerable
 
   def self.parse(string)
-    new(string).parse!
+    new("[#{string}]").parse!
   end
 
   attr_accessor :values
@@ -14,7 +14,7 @@ class Solid::Arguments
   end
 
   def parse!
-    self.values = Solid::Parser.new(@string).parse
+    self.values = Solid::Parser.parse(@string)
     self
   end
 
@@ -23,6 +23,6 @@ class Solid::Arguments
   end
 
   def interpolate(context)
-    values.map {|value| value.evaluate(context) }
+    values.evaluate(context)
   end
 end
