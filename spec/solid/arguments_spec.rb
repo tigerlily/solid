@@ -122,6 +122,23 @@ describe Solid::Arguments do
 
     end
 
+    context 'binary operators' do
+
+      it 'should permit additions' do
+        parse('1 + 2').should be == [3]
+      end
+
+      it 'should permit multiplications' do
+        parse('2 * 3').should be == [6]
+      end
+
+      it 'should permit to use builtins boolean operators' do
+        parse('true && false').should be == [false]
+        parse('false || true').should be == [true]
+      end
+
+    end
+
     context 'of type "context var"' do
 
       it 'should work' do

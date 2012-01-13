@@ -57,12 +57,19 @@ class Solid::Arguments
   end
 
   class MethodCall < Struct.new(:receiver, :name, :arguments)
+    BUILTIN_HANDLERS = {
+      :'&&' => ->(left, right) { left && right },
+      :'||' => ->(left, right) { left || right }
+    }
+
     def evaluate(context)
       pluck(receiver.evaluate(context), name, *arguments.map {|arg| arg.evaluate(context) }).to_liquid
     end
 
     def pluck(object, method, *args)
-      if object.respond_to?(method, false) # do not include private methods
+      if BUILTIN_HANDLERS.has_key?(method)
+        BUILTIN_HANDLERS[method].call(object, *args)
+      elsif object.respond_to?(method, false) # do not include private methods
         object.public_send(method, *args)
       elsif object.respond_to?(:[]) && args.empty?
         object[method]
@@ -155,6 +162,13 @@ class Solid::Arguments
     def method_call_args(args_sexp)
       args_sexp = args_sexp.last[1]
       args_sexp.map(&method(:parse_one))
+    end
+
+    # # 1 + 2
+    # [:@int, "1", [1, 0]], :*, [:@int, "2", [1, 4]]
+    def handle_binary(left_operand, operator, right_operand)
+      receiver = parse_one(left_operand)
+      MethodCall.new(receiver, operator, [parse_one(right_operand)])
     end
 
     # # [1]
