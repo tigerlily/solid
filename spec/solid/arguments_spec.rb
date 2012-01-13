@@ -102,6 +102,26 @@ describe Solid::Arguments do
 
     end
 
+    context 'of type Range' do
+
+      it 'should work for integer ranges' do
+        parse('1..10').should be == [1..10]
+      end
+
+      it 'should work for integer exclusive ranges' do
+        parse('1...10').should be == [1...10]
+      end
+
+      it 'should work for float ranges' do
+        parse('1.0..10.0').should be == [1.0..10.0]
+      end
+
+      it 'should work with context variables' do
+        parse('a..b', {'a' => 1, 'b' => 10}).should be == [1..10]
+      end
+
+    end
+
     context 'of type "context var"' do
 
       it 'should work' do

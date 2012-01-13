@@ -44,6 +44,12 @@ class Solid::Arguments
     end
   end
 
+  class LiteralRange < Struct.new(:start_value, :end_value, :exclusive)
+    def evaluate(context)
+      Range.new(start_value.evaluate(context), end_value.evaluate(context), exclusive)
+    end
+  end
+
   class LiteralHash < Literal
     def evaluate(context)
       Hash[value.map{ |k, v| [k.evaluate(context), v.evaluate(context)] }]
@@ -155,6 +161,18 @@ class Solid::Arguments
     # [[:@int, "1", [1, 1]]
     def handle_array(array)
       LiteralArray.new array.map(&method(:parse_one))
+    end
+
+    # # 1..10
+    # [[:@int, "1", [1, 0]], [:@int, "10", [1, 4]]]
+    def handle_dot2(start_value, end_value)
+      LiteralRange.new(parse_one(start_value), parse_one(end_value), false)
+    end
+
+    # # 1...10
+    # [[:@int, "1", [1, 0]], [:@int, "10", [1, 4]]]
+    def handle_dot3(start_value, end_value)
+      LiteralRange.new(parse_one(start_value), parse_one(end_value), true)
     end
 
     # # 'mystring'
