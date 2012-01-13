@@ -84,7 +84,7 @@ class Solid::Parser
   def parse_one(argument)
     type = argument.shift
     handler = "handle_#{type.to_s.sub('@', '')}"
-    raise SyntaxError, "unknown Ripper type: #{type}" unless respond_to?(handler)
+    raise SyntaxError, "unknown Ripper type: #{type.inspect}" unless respond_to?(handler)
     public_send handler, *argument
   end
 
@@ -182,8 +182,17 @@ class Solid::Parser
   # # 'mystring'
   # [:string_content, [:@tstring_content, "mystring", [1, 14]]]
   # TODO: handle string interpolation
-  def handle_string_literal(string_literal)
-    Literal.new(string_literal.last[1])
+  def handle_string_literal(string_content)
+    Literal.new(parse_one(string_content))
+  end
+
+  def handle_string_content(*parts)
+    parts.map(&method(:parse_one)).join
+  end
+
+  # [:@tstring_content, "mystring", [1, 14]]
+  def handle_tstring_content(string_content, lineno_column)
+    string_content
   end
 
   # # /bb|[^b]{2}/

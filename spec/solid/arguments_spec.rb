@@ -26,6 +26,10 @@ describe Solid::Arguments do
 
     context 'of type string' do
 
+      it 'can parse an empty string' do
+        parse("''").should be == ['']
+      end
+
       it 'can parse a constant' do
         parse("FooBar", {'FooBar' => 42}).should be == [42]
       end
@@ -54,9 +58,10 @@ describe Solid::Arguments do
         parse("'foo\"bar'").should be == ['foo"bar']
       end
 
-      it 'should work for a string containing interpolation' do
-        pending('not yet implemented')
-        parse('"1#{foo}3"', {'foo' => 2}).should be == ['123']
+      pending('not yet implemented') do
+        it 'should work for a string containing interpolation' do
+          parse('"1#{foo}3"', {'foo' => 2}).should be == ['123']
+        end
       end
 
     end
@@ -191,6 +196,14 @@ describe Solid::Arguments do
       end
 
       it 'should manage errors'
+
+    end
+
+    context 'of type hash' do
+
+      it 'should be able to parse unclosed hashes' do
+        parse('permissions: ""').should be == [{permissions: ''}]
+      end
 
     end
 
