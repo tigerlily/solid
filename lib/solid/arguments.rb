@@ -164,6 +164,13 @@ class Solid::Arguments
       Literal.new(string_literal.last[1])
     end
 
+    # # /bb|[^b]{2}/
+    # [[:@tstring_content, "bb|[^b]{2}", [1, 2]]].first.first
+    # TODO: handle regexp interpolation
+    def handle_regexp_literal(regexp_literal, lineno_column)
+      Literal.new Regexp.new(regexp_literal.first[1])
+    end
+
     KEYWORDS = {
       'true' => Literal.new(true),
       'false' => Literal.new(false),

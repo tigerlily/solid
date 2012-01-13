@@ -54,6 +54,11 @@ describe Solid::Arguments do
         parse("'foo\"bar'").should be == ['foo"bar']
       end
 
+      it 'should work for a string containing interpolation' do
+        pending('not yet implemented')
+        parse('"1#{foo}3"', {'foo' => 2}).should be == ['123']
+      end
+
     end
 
     context 'of type integer' do
@@ -80,6 +85,19 @@ describe Solid::Arguments do
 
       it 'should work with `false`' do
         parse('false').should be == [false]
+      end
+
+    end
+
+    context 'of type Regexp' do
+
+      it 'should work for simple cases' do
+        parse('/bb|[^b]{2}/').should be == [/bb|[^b]{2}/]
+      end
+
+      it 'should work for a regexp containing interpolation' do
+        pending('not yet implemented')
+        parse('/#{mystring}|[^b]{2}/', {'mystring' => 'bb'}).should be == [/bb|[^b]{2}/]
       end
 
     end

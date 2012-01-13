@@ -7,3 +7,7 @@ end
 class Symbol
   include LiquidSafe
 end
+
+class Regexp
+  include LiquidSafe
+end
