@@ -164,6 +164,12 @@ class Solid::Arguments
       args_sexp.map(&method(:parse_one))
     end
 
+    # # !true
+    # [:!, [:var_ref, [:@kw, "true", [1, 1]]]]
+    def handle_unary(operator, operand)
+      MethodCall.new(parse_one(operand), operator, [])
+    end
+
     # # 1 + 2
     # [:@int, "1", [1, 0]], :*, [:@int, "2", [1, 4]]
     def handle_binary(left_operand, operator, right_operand)

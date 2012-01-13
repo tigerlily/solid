@@ -139,6 +139,15 @@ describe Solid::Arguments do
 
     end
 
+    context 'unary operators' do
+
+      it 'should allow to use "!"' do
+        parse('!true').should be == [false]
+        parse('!false').should be == [true]
+      end
+
+    end
+
     context 'of type "context var"' do
 
       it 'should work' do
