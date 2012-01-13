@@ -163,6 +163,12 @@ class Solid::Arguments
       LiteralArray.new array.map(&method(:parse_one))
     end
 
+    # # (1)
+    # [[:@int, "42", [1, 2]]]
+    def handle_paren(content)
+      parse_one(content.first)
+    end
+
     # # 1..10
     # [[:@int, "1", [1, 0]], [:@int, "10", [1, 4]]]
     def handle_dot2(start_value, end_value)

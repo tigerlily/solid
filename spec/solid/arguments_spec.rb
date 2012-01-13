@@ -199,6 +199,15 @@ describe Solid::Arguments do
 
   end
 
+  context 'with useless round brackets' do
+
+    it 'should still work' do
+      parse('(42)').should be == [42]
+      parse('(((((((42)))))))').should be == [42]
+    end
+
+  end
+
   context 'with multiple arguments' do
 
     it 'should return 3 arguments and an option hash' do
