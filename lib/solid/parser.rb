@@ -137,7 +137,11 @@ class Solid::Parser
   #     [:string_literal, [:string_content, [:@tstring_content, ",", [1, 14]]]],
   #     [:@int, "2", [1, 18]]
   #   ], false]]
+  #
+  # 1 args list: ()
+  # [:arg_paren, nil]
   def method_call_args(args_sexp)
+    return [] if args_sexp[1].nil?
     args_sexp = args_sexp.last[1]
     args_sexp.map(&method(:parse_one))
   end

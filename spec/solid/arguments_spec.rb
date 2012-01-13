@@ -167,6 +167,10 @@ describe Solid::Arguments do
         parse('"foobar".length').should be == [6]
       end
 
+      it 'can call methods without arguments but parentheses on immediate values' do
+        parse('"foobar".length()').should be == [6]
+      end
+
       it 'can call a method with arguments' do
         parse('myvar.split(",", 2)', {'myvar' => 'foo,bar'}).should be == [%w(foo bar)]
       end
