@@ -14,13 +14,13 @@ shared_examples "a class highjacker" do
 
     let!(:original_class_id) { highjacked_class.object_id }
 
-    it 'should be able to replace original Liquid::Variable class' do
+    it 'should be able to replace original class' do
       expect{
         described_class.load!
       }.to change{ highjacked_class.object_id }.from(original_class_id).to(described_class.object_id)
     end
 
-    it 'should be able to restore original Liquid::Variable class' do
+    it 'should be able to restore original class' do
       described_class.load!
       expect{
         described_class.unload!
