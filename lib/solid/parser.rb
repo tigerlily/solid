@@ -1,3 +1,5 @@
+require 'ripper'
+
 class Solid::Parser
 
   class ContextVariable < Struct.new(:name)
