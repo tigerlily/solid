@@ -62,11 +62,11 @@ module Solid
 
     BASE_PATH = File.join(File.expand_path(File.dirname(__FILE__)), 'liquid_extensions')
 
-    %w(if_tag variable).each do |mod|
+    %w(if_tag unless_tag variable).each do |mod|
       require File.join(BASE_PATH, mod)
     end
 
-    ALL = [IfTag, Variable]
+    ALL = [IfTag, UnlessTag, Variable]
 
     class << self
 
