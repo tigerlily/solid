@@ -9,6 +9,7 @@ module Solid
       PAGINATION_METHODS = [:current_page, :per_page, :total_entries, :offset].freeze
 
       extend TagHighjacker
+
       tag_name :for
 
       def initialize(tag_name, expression, tokens)

@@ -21,7 +21,7 @@ module Solid
       def unload!
         if original_class = original_classes[demodulized_name]
           Liquid.send(:remove_const, demodulized_name)
-          Liquid.const_set(demodulized_name, original_classes)
+          Liquid.const_set(demodulized_name, original_class)
         end
       end
 
