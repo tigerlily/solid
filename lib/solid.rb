@@ -12,6 +12,7 @@ module Solid
   autoload :ContextError,     File.join(BASE_PATH, 'context_error')
   autoload :Element,          File.join(BASE_PATH, 'element')
   autoload :Iterable,         File.join(BASE_PATH, 'iterable')
+  autoload :MethodWhitelist,  File.join(BASE_PATH, 'method_whitelist')
   autoload :Parser,           File.join(BASE_PATH, 'parser')
   autoload :Tag,              File.join(BASE_PATH, 'tag')
   autoload :Template,         File.join(BASE_PATH, 'template')

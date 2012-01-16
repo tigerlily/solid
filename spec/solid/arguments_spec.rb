@@ -242,6 +242,18 @@ describe Solid::Arguments do
 
   end
 
+  context 'security !!!' do
+
+    it 'should not allow to call unsecure methods' do
+      parse('42.send("`", "echo foo")').should be == [nil]
+    end
+
+    it 'should not allow to call unsecure methods' do
+      parse('42.__send__("`", "echo foo")').should be == [nil]
+    end
+
+  end
+
   context 'with useless round brackets' do
 
     it 'should still work' do

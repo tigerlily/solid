@@ -1,3 +1,4 @@
+require 'set'
 require 'ripper'
 
 class Solid::Parser
@@ -33,6 +34,7 @@ class Solid::Parser
   end
 
   class MethodCall < Struct.new(:receiver, :name, :arguments)
+    include Solid::MethodWhitelist
     BUILTIN_HANDLERS = {
       :'&&' => ->(left, right) { left && right },
       :'||' => ->(left, right) { left || right }
@@ -42,10 +44,12 @@ class Solid::Parser
       pluck(receiver.evaluate(context), name, *arguments.map {|arg| arg.evaluate(context) }).to_liquid
     end
 
+    protected
+
     def pluck(object, method, *args)
       if BUILTIN_HANDLERS.has_key?(method)
         BUILTIN_HANDLERS[method].call(object, *args)
-      elsif object.respond_to?(method, false) # do not include private methods
+      elsif safely_respond_to?(object, method)
         object.public_send(method, *args)
       elsif object.respond_to?(:[]) && args.empty?
         object[method]
