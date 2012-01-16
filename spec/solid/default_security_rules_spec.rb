@@ -9,4 +9,9 @@ describe Solid, 'default security rules' do
 
   end
 
+	describe 'Kernel instances' do
+		subject { Object.new }
+
+		it { should safely_respond_to :nil? }
+	end
 end
