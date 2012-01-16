@@ -10,6 +10,8 @@ Due to a name conflict the gem is called tigerlily-solid. So to use it:
 gem 'tigerlily-solid', :require => 'solid'
 ```
 
+## Build Status [![Build Status](https://secure.travis-ci.org/tigerlily/solid.png)](http://travis-ci.org/tigerlily/solid)
+
 ## Tags
 
 To create a new tag, you just have to:
