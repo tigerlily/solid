@@ -119,6 +119,14 @@ class Solid::Parser
     MethodCall.new receiver, method, []
   end
 
+  # # myvar
+  #
+  # since 1.9.3
+  # [:vcall, [:@ident, "myvar", [1, 0]]]
+  def handle_vcall(expression)
+    parse_one(expression)
+  end
+
   # # myvar.split(',', 2)
   #
   # [:call, [:var_ref, [:@ident, "myvar", [1, 1]]], :".", [:@ident, "split", [1, 7]]]
