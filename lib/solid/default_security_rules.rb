@@ -1,5 +1,5 @@
 Solid::MethodWhitelist.allow(
-  BasicObject => [:!],
+  BasicObject => [:!, :!=, :==],
   Object => [:present?, :blank?],
   Kernel => [:nil?],
   Enumerable => [:sort],
