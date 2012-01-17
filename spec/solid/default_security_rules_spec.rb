@@ -7,7 +7,7 @@ describe Solid, 'default security rules' do
   end
 
   shared_examples_for 'an enumerable' do
-    it_should_safely_respond_to :sort, :length
+    it_should_safely_respond_to :sort, :length, :size
   end
 
   shared_examples_for 'a numeric' do
@@ -29,11 +29,20 @@ describe Solid, 'default security rules' do
 
   end
 
+  describe 'Array instances' do
+
+    subject { [] }
+
+    it_should_behave_like 'a ruby object', 'an enumerable'
+    it_should_safely_respond_to :[], :[]=, :first, :last, :join, :reverse, :uniq, :include?, :empty?
+  end
+
   describe 'Hash instances' do
 
     subject { {} }
 
     it_should_behave_like 'a ruby object', 'an enumerable'
+    it_should_safely_respond_to :[], :[]=, :has_key?, :has_value?, :empty?
 
   end
 
