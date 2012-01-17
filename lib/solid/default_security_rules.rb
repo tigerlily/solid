@@ -15,7 +15,8 @@ Solid::MethodWhitelist
 		Class => [:new, :allocate, :superclass],
 	)
 
-if defined?(JSON::Ext::Generator::GeneratorMethods)
+if defined?(JSON::Ext::Generator::GeneratorMethods::Fixnum) &&
+   defined?(JSON::Ext::Generator::GeneratorMethods::Bignum)
   Solid::MethodWhitelist.allow(
     JSON::Ext::Generator::GeneratorMethods::Fixnum => [:to_json],
     JSON::Ext::Generator::GeneratorMethods::Bignum => [:to_json],
