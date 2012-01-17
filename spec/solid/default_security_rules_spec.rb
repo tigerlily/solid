@@ -2,20 +2,21 @@ require 'spec_helper'
 
 describe Solid, 'default security rules' do
 
-  describe 'Hash instances' do
-
-    subject { {} }
-
-    it { should safely_respond_to :sort }
-
+  shared_examples_for 'a ruby object' do
+    it_should_safely_respond_to :nil?, :==, :!=, :!
   end
 
-  describe 'Kernel instances' do
+  shared_examples_for 'an enumerable' do
+    it_should_safely_respond_to :sort, :length
+  end
 
-    subject { Object.new }
+  shared_examples_for 'a numeric' do
+    it_should_safely_respond_to :%, :*, :**, :+, :-, :-@, :/, :<, :<=, :<=>, :==, :===, :>, :>=, :to_s, :abs
+  end
 
-    it { should safely_respond_to :nil? }
-
+  shared_examples_for 'a fixnum' do
+    it_should_behave_like 'a numeric'
+    it_should_safely_respond_to :div, :divmod, :even?, :odd?, :to_f
   end
 
   describe 'Basic object instance' do
@@ -24,29 +25,16 @@ describe Solid, 'default security rules' do
 
     subject { basic_class.new }
 
-    it { should safely_respond_to :! }
-
-    it { should safely_respond_to :!= }
-
-    it { should safely_respond_to :== }
+    it_should_behave_like 'a ruby object'
 
   end
 
-  shared_examples_for 'a numeric' do
+  describe 'Hash instances' do
 
-    [:%, :*, :**, :+, :-, :-@, :/, :<, :<=, :<=>, :==, :===, :>, :>=, :to_s, :abs].each do |method|
-      it { should safely_respond_to method }
-    end
+    subject { {} }
 
-  end
+    it_should_behave_like 'a ruby object', 'an enumerable'
 
-  shared_examples_for 'a fixnum' do
-    it_should_behave_like 'a numeric'
-
-    [:div, :divmod, :even?, :odd?, :to_f].each do |method|
-      it { should safely_respond_to method }
-    end
-    
   end
 
   describe 'Bignum instances' do
