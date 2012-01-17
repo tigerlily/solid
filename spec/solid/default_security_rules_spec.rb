@@ -81,6 +81,15 @@ describe Solid, 'default security rules' do
 
   end
 
+  describe 'Range instances' do
+
+    subject { 1..10 }
+
+    it_should_behave_like 'a ruby object', 'an enumerable'
+    it_should_safely_respond_to :first, :last, :begin, :end, :max, :min, :cover?, :include?, :member?
+
+  end
+
   describe 'Bignum instances' do
 
     subject { 2 ** 123 }
