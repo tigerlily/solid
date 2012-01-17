@@ -6,6 +6,11 @@ describe Solid, 'default security rules' do
     it_should_safely_respond_to :nil?, :==, :!=, :!
   end
 
+  shared_examples_for 'a boolean' do
+    it_should_behave_like 'a ruby object'
+    it_should_safely_respond_to :false?, :true?
+  end
+
   shared_examples_for 'an enumerable' do
     it_should_safely_respond_to :sort, :length, :size
   end
@@ -24,6 +29,30 @@ describe Solid, 'default security rules' do
     it_should_safely_respond_to :div, :divmod, :even?, :odd?, :to_f
   end
 
+  describe 'nil' do
+
+    subject { nil }
+
+    it_should_behave_like 'a ruby object'
+
+  end
+
+  describe true do
+
+    subject { true }
+
+    it_should_behave_like 'a ruby object'
+
+  end
+
+  describe false do
+
+    subject { false }
+
+    it_should_behave_like 'a ruby object'
+
+  end
+
   describe 'Basic object instance' do
 
     let(:basic_class) { Class.new(Object) }
@@ -40,6 +69,7 @@ describe Solid, 'default security rules' do
 
     it_should_behave_like 'a ruby object', 'an enumerable'
     it_should_safely_respond_to :[], :[]=, :first, :last, :join, :reverse, :uniq, :include?, :empty?
+
   end
 
   describe 'Hash instances' do
