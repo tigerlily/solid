@@ -11,3 +11,7 @@ end
 class Regexp
   include LiquidSafe
 end
+
+class Time
+  extend LiquidSafe
+end
