@@ -20,6 +20,7 @@ module Solid
             end
           end
         end
+        ''
       end
 
       def unknown_tag(tag, expression, tokens)

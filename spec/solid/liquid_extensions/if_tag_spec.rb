@@ -23,6 +23,16 @@ describe Solid::LiquidExtensions::IfTag do
       output.should be == 'Hello !'
     end
 
+    it 'should render nothing if the predicate return false' do
+      template = Solid::Template.parse(%(
+        {% if foo.include?('bar') %}
+          Hello !
+        {% endif %}
+      ))
+      output = template.render('foo' => ' plop ').strip
+      output.should be == ''
+    end
+
     it 'should still accept an else tag' do
       template = Solid::Template.parse(%(
         {% if foo.include?('bar') %}
