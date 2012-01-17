@@ -90,6 +90,15 @@ describe Solid, 'default security rules' do
 
   end
 
+  describe 'Regexp instances' do
+
+    subject { /bb|[^b]{2}/ }
+
+    it_should_behave_like 'a ruby object'
+    it_should_safely_respond_to :==, :===, :=~, :match
+
+  end
+
   describe 'Bignum instances' do
 
     subject { 2 ** 123 }
