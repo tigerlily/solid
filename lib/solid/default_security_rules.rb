@@ -14,3 +14,10 @@ Solid::MethodWhitelist
 		Module => [:const_get, :const_set, :const_defined?, :freeze, :ancestors],
 		Class => [:new, :allocate, :superclass],
 	)
+
+if defined?(JSON::Ext::Generator::GeneratorMethods)
+  Solid::MethodWhitelist.allow(
+    JSON::Ext::Generator::GeneratorMethods::Fixnum => [:to_json],
+    JSON::Ext::Generator::GeneratorMethods::Bignum => [:to_json],
+  )
+end
