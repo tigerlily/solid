@@ -1,9 +1,10 @@
 require 'spec_helper'
+require 'active_support/core_ext'
 
 describe Solid, 'default security rules' do
 
   shared_examples_for 'a ruby object' do
-    it_should_safely_respond_to :nil?, :==, :!=, :!, :!~
+    it_should_safely_respond_to :nil?, :==, :!=, :!, :!~, :blank?, :present?, :in?, :to_json
     it_should_not_safely_respond_to :const_get, :const_set,
       :instance_variable_get, :instance_variable_set, :instance_variable_defined?,
       :send, :__send__, :public_send,
@@ -43,12 +44,15 @@ describe Solid, 'default security rules' do
 
   shared_examples_for 'a numeric' do
     it_should_behave_like 'a ruby object', 'a comparable'
-    it_should_safely_respond_to :%, :*, :**, :+, :-, :-@, :/, :<=>, :===, :to_s, :abs
+    it_should_safely_respond_to :%, :*, :**, :+, :-, :-@, :/, :<=>, :===, :to_s, :abs,
+      :second, :seconds, :minute, :minutes, :hour, :hours, :day, :days, :week, :weeks,
+      :bytes, :kilobytes, :megabytes, :gigabytes, :terabytes, :petabytes, :exabytes
   end
 
-  shared_examples_for 'a fixnum' do
+  shared_examples_for 'an integer' do
     it_should_behave_like 'a numeric'
-    it_should_safely_respond_to :div, :divmod, :even?, :odd?, :to_f
+    it_should_safely_respond_to :div, :divmod, :even?, :odd?, :to_f,
+      :month, :months, :year, :years
   end
 
   describe 'nil' do
@@ -80,14 +84,22 @@ describe Solid, 'default security rules' do
     subject { [] }
 
     it_should_behave_like 'a ruby object', 'an enumerable'
-    it_should_safely_respond_to :[], :[]=, :first, :last, :join, :reverse, :uniq, :include?, :empty?
+    it_should_safely_respond_to :[], :[]=, :first, :last, :join, :reverse, :uniq, :include?, :empty?,
+      :to_sentence, :in_groups_of, :in_groups
+  end
+
+  describe 'Array class' do
+    subject { Array }
+
+    it_should_behave_like 'a ruby class'
+    it_should_safely_respond_to :wrap
   end
 
   describe 'Hash instances' do
     subject { {} }
 
     it_should_behave_like 'a ruby object', 'an enumerable'
-    it_should_safely_respond_to :[], :[]=, :has_key?, :has_value?, :empty?
+    it_should_safely_respond_to :[], :[]=, :has_key?, :has_value?, :empty?, :except, :slice
   end
 
   describe 'Range instances' do
@@ -108,13 +120,14 @@ describe Solid, 'default security rules' do
     subject { 2 ** 123 }
 
     it { should be_a Bignum }
-    it_should_behave_like 'a fixnum'
+    it_should_behave_like 'an integer'
   end
 
-  describe 'Integer instances' do
+  describe 'Fixnum instances' do
     subject { 4 }
 
-    it_should_behave_like 'a fixnum'
+    it_should_behave_like 'an integer'
+    it_should_safely_respond_to :multiple_of?
   end
 
   describe 'Float instances' do
@@ -148,7 +161,8 @@ describe Solid, 'default security rules' do
 
     it_should_behave_like 'a ruby object', 'a comparable', 'an enumerable'
     it_should_safely_respond_to :gsub, :strip, :chop, :chomp, :start_with?, :end_with?,
-      :[], :length, :size, :empty?, :=~, :split, :upcase, :downcase, :capitalize, :squeeze, :tr
+      :[], :length, :size, :empty?, :=~, :split, :upcase, :downcase, :capitalize, :squeeze, :tr,
+      :exclude?, :truncate
   end
 
   describe 'Module instances' do
