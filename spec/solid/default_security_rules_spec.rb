@@ -10,8 +10,13 @@ describe Solid, 'default security rules' do
     it_should_safely_respond_to :sort, :length, :size
   end
 
+  shared_examples_for 'a comparable' do
+    it_should_safely_respond_to :<, :<=, :==, :>, :>=, :between?
+  end
+
   shared_examples_for 'a numeric' do
-    it_should_safely_respond_to :%, :*, :**, :+, :-, :-@, :/, :<, :<=, :<=>, :==, :===, :>, :>=, :to_s, :abs
+    it_should_behave_like 'a comparable'
+    it_should_safely_respond_to :%, :*, :**, :+, :-, :-@, :/, :<=>, :===, :to_s, :abs
   end
 
   shared_examples_for 'a fixnum' do

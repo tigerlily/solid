@@ -3,4 +3,5 @@ Solid::MethodWhitelist.allow(
   Object => [:present?, :blank?],
   Kernel => [:nil?],
   Enumerable => [:sort],
+  Comparable => [:<, :<=, :==, :>, :>=, :between?],
 )
