@@ -37,4 +37,6 @@ module Solid
 
   end
 
+  SyntaxError = Class.new(Liquid::SyntaxError)
+
 end

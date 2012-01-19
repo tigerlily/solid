@@ -252,6 +252,12 @@ describe Solid::Arguments do
       parse('42.__send__("`", "echo foo")').should be == [nil]
     end
 
+    it "should raise a Solid::SyntaxError on unknown constructs" do
+      expect {
+        parse('{}[]')
+      }.to raise_error(Solid::SyntaxError)
+    end
+
   end
 
   context 'with useless round brackets' do

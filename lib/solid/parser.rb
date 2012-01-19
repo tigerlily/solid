@@ -90,7 +90,7 @@ class Solid::Parser
   def parse_one(argument)
     type = argument.shift
     handler = "handle_#{type.to_s.sub('@', '')}"
-    raise SyntaxError, "unknown Ripper type: #{type.inspect}" unless respond_to?(handler)
+    raise Solid::SyntaxError, "unknown Ripper type: #{type.inspect}" unless respond_to?(handler)
     public_send handler, *argument
   end
 
@@ -228,7 +228,7 @@ class Solid::Parser
   # # true
   # "true", [1, 33]
   def handle_kw(keyword, lineno_column)
-    raise 'unknown Ripper sexp' unless KEYWORDS.has_key? keyword
+    raise Solid::SyntaxError, 'unknown Ripper sexp' unless KEYWORDS.has_key? keyword
     KEYWORDS[keyword]
   end
 
