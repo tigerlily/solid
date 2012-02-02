@@ -20,6 +20,7 @@ module Solid
       def display(collection)
         forloop = loop_for(collection)
         output = []
+        collection = [] unless collection.respond_to?(:each_with_index)
         collection.each_with_index do |element, index|
           current_context.stack do
             current_context[@variable_name] = element.to_liquid

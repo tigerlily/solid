@@ -31,6 +31,16 @@ describe Solid::LiquidExtensions::ForTag do
       output.should be == "0/3|1/3|2/3|"
     end
 
+    it 'should consider all non iterable objects as empty arrays' do
+      template = Solid::Template.parse(%(
+        {% for foo in foos %}
+          {{ foo }}
+        {% endfor %}
+      ))
+      output = template.render('foos' => nil).strip
+      output.should be == ''
+    end
+
   end
 
 end
