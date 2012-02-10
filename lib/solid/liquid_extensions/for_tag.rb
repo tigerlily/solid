@@ -42,7 +42,7 @@ module Solid
       end
 
       def paginated?(collection)
-        PAGINATION_METHODS.all?{ |m| @collection.respond_to?(m) }
+        PAGINATION_METHODS.all?{ |m| collection.respond_to?(m) }
       end
 
     end
