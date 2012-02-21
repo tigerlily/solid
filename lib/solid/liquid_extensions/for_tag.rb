@@ -42,7 +42,8 @@ module Solid
       end
 
       def paginated?(collection)
-        PAGINATION_METHODS.all?{ |m| collection.respond_to?(m) }
+        PAGINATION_METHODS.all?{ |m| collection.respond_to?(m) } &&
+        !collection.per_page.nil? # The only way to see if a Mongoid::Criteria is paginated with WillPaginate
       end
 
     end
@@ -83,7 +84,7 @@ module Solid
       end
 
       def inc!
-        @index0 += 1
+         @index0 += 1
       end
 
     end
@@ -92,7 +93,7 @@ module Solid
 
       def initialize(collection)
         super
-        @index0 = collection.offset
+        @index0 = collection.offset || 0
       end
 
     end
