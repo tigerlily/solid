@@ -92,7 +92,7 @@ class Solid::ModelDrop < Liquid::Drop
   protected
 
   def limit_to(size)
-    @scope = scope.limit(size)
+    @scope = scope.limit(size.to_i)
   end
   immutable_method :limit_to
 
