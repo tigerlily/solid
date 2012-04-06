@@ -13,11 +13,11 @@ var SolidVariableHighlightRules = function() {
           {
              token : "variable.context",
              regex : "[a-z_][a-zA-Z0-9_$]*\\b",
-             next  : 'filter',
+             next  : 'filter'
           }, {
              token : "constant.language",
              regex : "[a-zA-Z_][a-zA-Z0-9_$]*\\b",
-             next  : 'filter',
+             next  : 'filter'
           }, {
              token : "string", // single line
              regex : '["](?:(?:\\\\.)|(?:[^"\\\\]))*?["]'
