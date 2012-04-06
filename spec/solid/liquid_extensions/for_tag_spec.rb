@@ -25,10 +25,10 @@ describe Solid::LiquidExtensions::ForTag do
 
     it 'should still provide the "forloop" object' do
       template = Solid::Template.parse(%(
-        {% for foo in foos %}{{ forloop.index0 }}/{{ forloop.length }}|{% endfor %}
+        {% for foo in foos %}{{ forloop.first }},{{ forloop.index0 }}/{{ forloop.length }},{{ forloop.last }}|{% endfor %}
       ))
       output = template.render('foos' => [1, 2, 3]).strip
-      output.should be == "0/3|1/3|2/3|"
+      output.should be == "true,0/3,false|false,1/3,false|false,2/3,true|"
     end
 
     it 'should consider all non iterable objects as empty arrays' do

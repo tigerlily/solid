@@ -80,7 +80,7 @@ module Solid
       end
 
       def last
-        index == length - 1
+        index == length
       end
 
       def inc!
