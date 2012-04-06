@@ -142,7 +142,7 @@ var SolidHighlightRules = function() {
     {
       token: ["keyword.operator", "string"],
       regex: '(%})(")',
-      next: "tagembed-attribute-list"
+      next: "tag_embed_attribute_list"
     }, {
       token: "keyword.operator",
       regex: '%}',
@@ -154,7 +154,7 @@ var SolidHighlightRules = function() {
     {
        token: ["keyword.operator", "string"],
        regex: '(}})(")',
-       next: "tagembed-attribute-list"
+       next: "tag_embed_attribute_list"
     }, {
        token: "keyword.operator",
        regex: '}}',
@@ -168,12 +168,12 @@ var SolidHighlightRules = function() {
     next: 'solid-variable-start'
   });
 
-  this.$rules['tagembed-attribute-list'].unshift({
+  this.$rules['tag_embed_attribute_list'].unshift({
     token: ["string", "keyword.operator"],
     regex: '(")({%)',
     next: 'solid-tag-start'
   });
-  this.$rules['tagembed-attribute-list'].unshift({
+  this.$rules['tag_embed_attribute_list'].unshift({
     token: ["string", "keyword.operator"],
     regex: '(")({{)',
     next: 'solid-variable-start'
