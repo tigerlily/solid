@@ -6,8 +6,6 @@ module Solid
     # "reversed" or "limit: 20 offset: 40" are favourably replaced by pure ruby
     # methods like `Array#reversed` or `Array#slice`
     class ForTag < Solid::Block
-      PAGINATION_METHODS = [:current_page, :per_page, :total_entries, :offset].freeze
-
       extend TagHighjacker
 
       tag_name :for
@@ -42,8 +40,8 @@ module Solid
       end
 
       def paginated?(collection)
-        PAGINATION_METHODS.all?{ |m| collection.respond_to?(m) } &&
-        !collection.per_page.nil? # The only way to see if a Mongoid::Criteria is paginated with WillPaginate
+        collection.singleton_class < WillPaginate::CollectionMethods or
+        collection.singleton_class < WillPaginate::Mongoid::CollectionMethods
       end
 
     end
