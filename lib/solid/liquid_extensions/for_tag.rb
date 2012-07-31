@@ -40,8 +40,9 @@ module Solid
       end
 
       def paginated?(collection)
-        collection.singleton_class < WillPaginate::CollectionMethods or
-        collection.singleton_class < WillPaginate::Mongoid::CollectionMethods
+        defined?(WillPaginate) and
+          (collection.singleton_class < WillPaginate::CollectionMethods or
+          collection.singleton_class < WillPaginate::Mongoid::CollectionMethods)
       end
 
     end
