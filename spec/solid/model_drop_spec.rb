@@ -12,5 +12,15 @@ describe Solid::ModelDrop do
       drop.reverse.should be == [3, 2, 1]
     end
 
+    it "go through #each" do
+      klass = Class.new(described_class) do
+        def each
+          super.select(&:odd?)
+        end
+      end
+      drop = klass.new([1, 2, 3])
+      drop.reverse.should be == [3, 1]
+    end
+
   end
 end
