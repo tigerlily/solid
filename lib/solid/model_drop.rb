@@ -87,7 +87,8 @@ class Solid::ModelDrop < Liquid::Drop
     raise NoMethodError.new("undefined method `#{method_name}' for #{self.inspect}")
   end
 
-  delegate *(Array.public_instance_methods - self.public_instance_methods), :to => :scope
+  delegate :to_a, to: :each
+  delegate *(Array.public_instance_methods - self.public_instance_methods), to: :to_a
 
   protected
 
