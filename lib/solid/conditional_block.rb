@@ -10,8 +10,8 @@ class Solid::ConditionalBlock < Liquid::Block
   def render(context)
     with_context(context) do
       display(*arguments.interpolate(context)) do |condition_satisfied|
-        block = condition_satisfied ? @blocks.first : @blocks.last
-        render_all(block, context)
+        block = condition_satisfied ? @blocks.first : @blocks[1]
+        render_all(block, context) if block
       end
     end
   end

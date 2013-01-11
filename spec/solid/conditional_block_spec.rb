@@ -28,6 +28,12 @@ describe Solid::ConditionalBlock do
       subject.render(context).should be == 'blank'
     end
 
+    it 'yielding false without a `else` block does not render anything' do
+      context = Liquid::Context.new('mystring' => '')
+      subject = IfPresent.new('ifpresent', 'mystring', ['present', '{% endifpresent %}'])
+      subject.render(context).should be_nil
+    end
+
   end
 
 end
