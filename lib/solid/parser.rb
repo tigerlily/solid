@@ -176,7 +176,7 @@ class Solid::Parser
   # # [1]
   # [[:@int, "1", [1, 1]]
   def handle_array(array)
-    LiteralArray.new (array || []).map(&method(:parse_one))
+    LiteralArray.new((array || []).map(&method(:parse_one)))
   end
 
   # # (1)
