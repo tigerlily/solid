@@ -258,6 +258,30 @@ describe Solid::Arguments do
       }.to raise_error(Solid::SyntaxError)
     end
 
+    it "should use #to_liquid" do
+      drop = Object.new
+      def drop.to_liquid
+        'liquid'
+      end
+      parse('drop', 'drop' => drop).should be == ['liquid']
+    end
+
+    it "should use #context= if available" do
+      drop = Object.new
+      class << drop
+        def to_liquid
+          self
+        end
+        def to_s
+          @alias
+        end
+        def context=(context)
+          @alias = context['alias']
+        end
+      end
+      parse('drop.to_s', 'drop' => drop, 'alias' => 'liquid').should be == ['liquid']
+    end
+
   end
 
   context 'with useless round brackets' do
