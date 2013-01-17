@@ -35,6 +35,12 @@ module Solid
       object
     end
 
+    def to_liquid(object, context)
+      object = object.to_liquid
+      object.context = context if object.respond_to?(:context=)
+      object
+    end
+
   end
 
   SyntaxError = Class.new(Liquid::SyntaxError)

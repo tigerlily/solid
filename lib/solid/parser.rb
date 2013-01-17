@@ -5,13 +5,13 @@ class Solid::Parser
 
   class ContextVariable < Struct.new(:name)
     def evaluate(context)
-      context[name].to_liquid
+      Solid.to_liquid(context[name], context)
     end
   end
 
   class Literal < Struct.new(:value)
     def evaluate(context)
-      value.to_liquid
+      Solid.to_liquid(value, context)
     end
   end
 
@@ -41,7 +41,7 @@ class Solid::Parser
     }
 
     def evaluate(context)
-      pluck(receiver.evaluate(context), name, *arguments.map {|arg| arg.evaluate(context) }).to_liquid
+      Solid.to_liquid(pluck(receiver.evaluate(context), name, *arguments.map {|arg| arg.evaluate(context) }), context)
     end
 
     protected
