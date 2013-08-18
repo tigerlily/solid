@@ -23,15 +23,15 @@ describe Solid::Block do
     subject{ DummyBlock.new('dummy', 'condition', tokens) }
 
     it 'yielding should render the block content' do
-      subject.render('condition' => true).should be == 'dummy'
+      subject.render(Liquid::Context.new('condition' => true)).should be == 'dummy'
     end
 
     it 'should only render until the {% endblock %} tag' do
-      subject.render('condition' => true).should_not include('outside')
+      subject.render(Liquid::Context.new('condition' => true)).should_not include('outside')
     end
 
     it 'should not render its content if it do not yield' do
-      subject.render('condition' => false).should_not include('dummy')
+      subject.render(Liquid::Context.new('condition' => false)).should_not include('dummy')
     end
 
   end
