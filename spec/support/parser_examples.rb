@@ -44,6 +44,18 @@ shared_examples 'a solid parser' do
       exp.should evaluate_to []
     end
 
+    it 'is able to parse a inclusive Range' do
+      exp = parser.parse('1..10')
+      exp.should be_a Solid::Parser::LiteralRange
+      exp.should evaluate_to 1..10
+    end
+
+    it 'is able to parse a exclusive Range' do
+      exp = parser.parse('1...10')
+      exp.should be_a Solid::Parser::LiteralRange
+      exp.should evaluate_to 1...10
+    end
+
     it 'is able to parse a Hash' do
       exp = parser.parse('{1 => 2, 3 => 4}')
       exp.should be_a Solid::Parser::LiteralHash

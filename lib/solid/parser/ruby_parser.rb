@@ -23,7 +23,12 @@ class Solid::Parser::RubyParser < Solid::Parser
   end
 
   def handle_lit(literal)
-    Literal.new(literal)
+    case literal
+    when Range
+      LiteralRange.new(Literal.new(literal.first), Literal.new(literal.last), literal.exclude_end?)
+    else
+      Literal.new(literal)
+    end
   end
 
   def handle_str(literal)
