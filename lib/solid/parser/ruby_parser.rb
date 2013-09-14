@@ -38,4 +38,16 @@ class Solid::Parser::RubyParser < Solid::Parser
     LiteralHash.new(Hash[*hash_keys_and_values.map(&method(:parse_one))])
   end
 
+  def handle_true
+    KEYWORDS['true']
+  end
+
+  def handle_false
+    KEYWORDS['false']
+  end
+
+  def handle_nil
+    KEYWORDS['nil']
+  end
+
 end

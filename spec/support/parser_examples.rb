@@ -68,6 +68,24 @@ shared_examples 'a solid parser' do
       exp.should evaluate_to(/foo/x)
     end
 
+    it 'is able to parse a true Boolean' do
+      exp = parser.parse('true')
+      exp.should be_a Solid::Parser::Literal
+      exp.should evaluate_to(true)
+    end
+
+    it 'is able to parse a false Boolean' do
+      exp = parser.parse('false')
+      exp.should be_a Solid::Parser::Literal
+      exp.should evaluate_to(false)
+    end
+
+    it 'is able to parse a nil' do
+      exp = parser.parse('nil')
+      exp.should be_a Solid::Parser::Literal
+      exp.should evaluate_to(nil)
+    end
+
   end
 
 end
