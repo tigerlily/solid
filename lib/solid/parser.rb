@@ -2,7 +2,11 @@ class Solid::Parser
 
   BASE_PATH = File.join(File.expand_path(File.dirname(__FILE__)), 'parser')
 
-  autoload :Ripper, File.join(BASE_PATH, 'ripper')
+  begin
+    require 'ripper'
+    autoload :Ripper, File.join(BASE_PATH, 'ripper')
+  rescue LoadError
+  end
   autoload :RubyParser, File.join(BASE_PATH, 'ruby_parser')
 
   class ContextVariable < Struct.new(:name)
