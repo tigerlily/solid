@@ -1,5 +1,3 @@
-require 'ripper'
-
 class Solid::Parser::Ripper < Solid::Parser
 
   def self.parse(string)
