@@ -56,6 +56,18 @@ shared_examples 'a solid parser' do
       exp.should evaluate_to({})
     end
 
+    it 'is able to parse a simple Regex' do
+      exp = parser.parse('/foo/')
+      exp.should be_a Solid::Parser::Literal
+      exp.should evaluate_to(/foo/)
+    end
+
+    it 'is able to parse a flagged Regex' do
+      exp = parser.parse('/foo/x')
+      exp.should be_a Solid::Parser::Literal
+      exp.should evaluate_to(/foo/x)
+    end
+
   end
 
 end

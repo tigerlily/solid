@@ -152,11 +152,30 @@ class Solid::Parser::Ripper < Solid::Parser
     string_content
   end
 
+  REGEXP_FLAGS = {
+    'i' => Regexp::IGNORECASE,
+    'x' => Regexp::EXTENDED,
+    'm' => Regexp::MULTILINE,
+    'n' => Regexp::NOENCODING
+  }
+
+  def instanciate_regexp(content, flags)
+    mode = 0
+    flags.each_char do |flag|
+      mode |= REGEXP_FLAGS[flag] || 0
+    end
+    Regexp.new(content, mode)
+  end
+
   # # /bb|[^b]{2}/
-  # [[:@tstring_content, "bb|[^b]{2}", [1, 2]]].first.first
+  # [[[:@tstring_content, "bb|[^b]{2}", [1, 1]]], [:@regexp_end, "/", [1, 4]]]
+
+  # # /bb|[^b]{2}/ix
+  # [[[:@tstring_content, "bb|[^b]{2}", [1, 1]]], [:@regexp_end, "/ix", [1, 4]]]
+
   # TODO: handle regexp interpolation
-  def handle_regexp_literal(regexp_literal, lineno_column)
-    Literal.new Regexp.new(regexp_literal.first[1])
+  def handle_regexp_literal(regexp_content, regexp_end)
+    Literal.new instanciate_regexp(regexp_content.first[1], regexp_end[1][1..-1])
   end
 
   # # true
