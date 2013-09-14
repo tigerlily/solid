@@ -2,6 +2,10 @@ require 'ripper'
 
 class Solid::Parser::Ripper < Solid::Parser
 
+  def self.parse(string)
+    new(string).parse
+  end
+
   def initialize(string)
     @string = string
     @sexp = nil

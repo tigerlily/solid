@@ -3,6 +3,7 @@ class Solid::Parser
   BASE_PATH = File.join(File.expand_path(File.dirname(__FILE__)), 'parser')
 
   autoload :Ripper, File.join(BASE_PATH, 'ripper')
+  autoload :RubyParser, File.join(BASE_PATH, 'ruby_parser')
 
   class ContextVariable < Struct.new(:name)
     def evaluate(context)
@@ -72,11 +73,11 @@ class Solid::Parser
     attr_writer :parser
 
     def parser
-      @parser || Solid::Parser::Ripper
+      @parser || Solid::Parser::RubyParser
     end
 
     def parse(string)
-      parser.new(string).parse
+      parser.parse(string)
     end
 
   end
