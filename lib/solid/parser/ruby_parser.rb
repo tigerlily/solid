@@ -64,5 +64,4 @@ class Solid::Parser::RubyParser < Solid::Parser
 
     MethodCall.new(parse_one(receiver), method_name, arguments.map(&method(:parse_one)))
   end
-
 end

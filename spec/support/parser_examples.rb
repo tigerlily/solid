@@ -120,7 +120,23 @@ shared_examples 'a solid parser' do
 
   context 'methods calling' do
 
-    let(:context) { {'somevar' => 'foo'} }
+    class Dummy
+
+      def echo(exp)
+        exp
+      end
+
+      def [](key)
+        key
+      end
+
+      def to_liquid
+        self
+      end
+
+    end
+
+    let(:context) { {'somevar' => 'foo', 'dummy' => Dummy.new, 'truth' => 42} }
 
     it 'is able to call simple methods without arguments' do
       exp = parser.parse('somevar.length')
@@ -156,6 +172,36 @@ shared_examples 'a solid parser' do
       exp = parser.parse('somevar.gsub("f", "b")')
       exp.should be_a Solid::Parser::MethodCall
       exp.should evaluate_to('boo')
+    end
+
+    it 'is able to call a method with unenclosed terminating hash' do
+      exp = parser.parse('dummy.echo("foo" => "bar")')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to({"foo" => "bar"})
+    end
+
+    it 'is able to call "binary operator" methods' do
+      exp = parser.parse('1 + 1')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(2)
+    end
+
+    it 'is able to call `-` "unary operator" methods' do
+      exp = parser.parse('-truth')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(-42)
+    end
+
+    it 'is able to call `+` "unary operator" methods' do
+      exp = parser.parse('+truth')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(42)
+    end
+
+    it 'is able to call `~` "unary operator" methods' do
+      exp = parser.parse('~truth')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(-43)
     end
 
   end
