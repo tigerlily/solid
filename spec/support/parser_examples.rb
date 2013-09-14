@@ -134,6 +134,18 @@ shared_examples 'a solid parser' do
       exp.should evaluate_to(3)
     end
 
+    it 'is able to call a simple method ending with a "?"' do
+      exp = parser.parse('somevar.nil?')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(false)
+    end
+
+    it 'is able to call a simple method ending with a "!"' do
+      exp = parser.parse('somevar.strip!')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(nil)
+    end
+
   end
 
 end
