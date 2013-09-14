@@ -34,4 +34,8 @@ class Solid::Parser::RubyParser < Solid::Parser
     LiteralArray.new(array_values.map(&method(:parse_one)))
   end
 
+  def handle_hash(*hash_keys_and_values)
+    LiteralHash.new(Hash[*hash_keys_and_values.map(&method(:parse_one))])
+  end
+
 end

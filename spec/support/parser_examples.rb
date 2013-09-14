@@ -44,6 +44,18 @@ shared_examples 'a solid parser' do
       exp.should evaluate_to []
     end
 
+    it 'is able to parse a Hash' do
+      exp = parser.parse('{1 => 2, 3 => 4}')
+      exp.should be_a Solid::Parser::LiteralHash
+      exp.should evaluate_to({1 => 2, 3 => 4})
+    end
+
+    it 'is able to parse an empty Hash' do
+      exp = parser.parse('{}')
+      exp.should be_a Solid::Parser::LiteralHash
+      exp.should evaluate_to({})
+    end
+
   end
 
 end

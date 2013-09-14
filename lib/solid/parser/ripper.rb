@@ -49,6 +49,7 @@ class Solid::Parser::Ripper < Solid::Parser
   # # {foo: 42}
   # [:assoclist_from_args, [[:assoc_new, [:@label, "foo:", [1, 2]], [:@int, "42", [1, 7]]]]]
   def handle_hash(hash)
+    return LiteralHash.new({}) unless hash
     handle_bare_assoc_hash(hash.last)
   end
 
