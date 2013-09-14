@@ -11,7 +11,11 @@ class Solid::Parser::RubyParser < Solid::Parser
   end
 
   def parse
-    @sexp = ::RubyParser.new.parse(@expression)
+    begin
+      @sexp = ::RubyParser.new.parse(@expression)
+    rescue ::RubyParser::SyntaxError => exc
+      raise Solid::SyntaxError.new(exc.message)
+    end
     parse_one(@sexp)
   end
 
@@ -70,7 +74,7 @@ class Solid::Parser::RubyParser < Solid::Parser
   def handle_call(receiver, method_name, *arguments)
     return ContextVariable.new(method_name.to_s) if receiver.nil?
 
-    MethodCall.new(parse_one(receiver), method_name, arguments.map(&method(:parse_one)))
+    MethodCall.new(parse_one(receiver), method_name.to_s, arguments.map(&method(:parse_one)))
   end
 
   def handle_and(left_expression, right_expression)

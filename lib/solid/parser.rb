@@ -43,6 +43,9 @@ class Solid::Parser
       :'and' => ->(left, right) { left and right },
       :'or' => ->(left, right) { left or right }
     }
+    BUILTIN_HANDLERS.keys.each do |operator|
+      BUILTIN_HANDLERS[operator.to_s] = BUILTIN_HANDLERS[operator]
+    end
 
     def evaluate(context)
       Solid.to_liquid(pluck(receiver.evaluate(context), name, *arguments.map {|arg| arg.evaluate(context) }), context)
