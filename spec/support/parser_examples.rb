@@ -100,4 +100,21 @@ shared_examples 'a solid parser' do
 
   end
 
+  context 'constants and variable reference' do
+
+    let(:context) { {'TRUTH' => 42, 'somevar' => 'foo'} }
+
+    it 'is able to reference a simple constant' do
+      exp = parser.parse('TRUTH')
+      exp.should be_a Solid::Parser::ContextVariable
+      exp.should evaluate_to(42)
+    end
+
+    it 'is able to reference a simple variable' do
+      exp = parser.parse('somevar')
+      exp.should be_a Solid::Parser::ContextVariable
+      exp.should evaluate_to('foo')
+    end
+
+  end
 end

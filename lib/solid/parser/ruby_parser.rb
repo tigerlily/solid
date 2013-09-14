@@ -55,4 +55,12 @@ class Solid::Parser::RubyParser < Solid::Parser
     KEYWORDS['nil']
   end
 
+  def handle_const(const_name)
+    ContextVariable.new(const_name.to_s)
+  end
+
+  def handle_call(context, method_name)
+    return ContextVariable.new(method_name.to_s) if context.nil?
+  end
+
 end
