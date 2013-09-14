@@ -22,6 +22,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "i18n"
   s.add_development_dependency "ruby_parser"
   s.add_development_dependency "activesupport", ">= 3"
-  s.add_development_dependency "debugger"
   s.add_runtime_dependency "liquid"
 end
