@@ -24,7 +24,7 @@ class Solid::Parser::RubyParser < Solid::Parser
 
   def handle_lit(literal)
     case literal
-    when Range
+    when Range # see https://github.com/seattlerb/ruby_parser/issues/134
       LiteralRange.new(Literal.new(literal.first), Literal.new(literal.last), literal.exclude_end?)
     else
       Literal.new(literal)
