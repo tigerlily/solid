@@ -43,6 +43,14 @@ class Solid::Parser::RubyParser < Solid::Parser
     LiteralHash.new(Hash[*hash_keys_and_values.map(&method(:parse_one))])
   end
 
+  def handle_dot2(start_value, end_value)
+    LiteralRange.new(parse_one(start_value), parse_one(end_value), false)
+  end
+
+  def handle_dot3(start_value, end_value)
+    LiteralRange.new(parse_one(start_value), parse_one(end_value), true)
+  end
+
   def handle_true
     KEYWORDS['true']
   end

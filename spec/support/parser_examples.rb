@@ -20,6 +20,12 @@ shared_examples 'a solid parser' do
       exp.should evaluate_to 42
     end
 
+    it 'is able to parse a Float' do
+      exp = parser.parse('4.2')
+      exp.should be_a Solid::Parser::Literal
+      exp.should evaluate_to 4.2
+    end
+
     it 'is able to parse a String' do
       exp = parser.parse('"foo"')
       exp.should be_a Solid::Parser::Literal
@@ -54,6 +60,18 @@ shared_examples 'a solid parser' do
       exp = parser.parse('1...10')
       exp.should be_a Solid::Parser::LiteralRange
       exp.should evaluate_to 1...10
+    end
+
+    it 'is able to parse a inclusive Range of Float' do
+      exp = parser.parse('1.0..10.0')
+      exp.should be_a Solid::Parser::LiteralRange
+      exp.should evaluate_to 1.0..10.0
+    end
+
+    it 'is able to parse a exclusive Range of Float' do
+      exp = parser.parse('1.0...10.0')
+      exp.should be_a Solid::Parser::LiteralRange
+      exp.should evaluate_to 1.0...10.0
     end
 
     it 'is able to parse a Hash' do
