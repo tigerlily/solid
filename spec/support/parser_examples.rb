@@ -117,4 +117,23 @@ shared_examples 'a solid parser' do
     end
 
   end
+
+  context 'methods calling' do
+
+    let(:context) { {'somevar' => 'foo'} }
+
+    it 'is able to call simple methods without arguments' do
+      exp = parser.parse('somevar.length')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(3)
+    end
+
+    it 'is able to call a method on a literal' do
+      exp = parser.parse('"foo".length')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(3)
+    end
+
+  end
+
 end

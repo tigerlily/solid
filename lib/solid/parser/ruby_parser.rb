@@ -59,8 +59,10 @@ class Solid::Parser::RubyParser < Solid::Parser
     ContextVariable.new(const_name.to_s)
   end
 
-  def handle_call(context, method_name)
-    return ContextVariable.new(method_name.to_s) if context.nil?
+  def handle_call(receiver, method_name)
+    return ContextVariable.new(method_name.to_s) if receiver.nil?
+
+    MethodCall.new(parse_one(receiver), method_name, [])
   end
 
 end
