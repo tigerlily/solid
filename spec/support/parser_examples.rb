@@ -146,6 +146,18 @@ shared_examples 'a solid parser' do
       exp.should evaluate_to(nil)
     end
 
+    it 'is able to call a method on nil' do
+      exp = parser.parse('nil.nil?')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(true)
+    end
+
+    it 'is able to call a method with arguments' do
+      exp = parser.parse('somevar.gsub("f", "b")')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to('boo')
+    end
+
   end
 
 end
