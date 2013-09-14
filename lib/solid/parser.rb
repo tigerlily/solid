@@ -39,7 +39,9 @@ class Solid::Parser
     include Solid::MethodWhitelist
     BUILTIN_HANDLERS = {
       :'&&' => ->(left, right) { left && right },
-      :'||' => ->(left, right) { left || right }
+      :'||' => ->(left, right) { left || right },
+      :'and' => ->(left, right) { left and right },
+      :'or' => ->(left, right) { left or right }
     }
 
     def evaluate(context)

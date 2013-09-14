@@ -72,4 +72,13 @@ class Solid::Parser::RubyParser < Solid::Parser
 
     MethodCall.new(parse_one(receiver), method_name, arguments.map(&method(:parse_one)))
   end
+
+  def handle_and(left_expression, right_expression)
+    handle_call(left_expression, :'&&', right_expression)
+  end
+
+  def handle_or(left_expression, right_expression)
+    handle_call(left_expression, :'||', right_expression)
+  end
+
 end

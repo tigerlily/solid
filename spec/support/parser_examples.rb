@@ -224,4 +224,38 @@ shared_examples 'a solid parser' do
 
   end
 
+  context 'boolean operators' do
+
+    it 'is able to evaluate && expressions' do
+      exp = parser.parse('true && true')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(true)
+    end
+
+    it 'is able to evaluate || expressions' do
+      exp = parser.parse('true || false')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(true)
+    end
+
+    it 'is able to evaluate `and` expressions' do
+      exp = parser.parse('true or true')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(true)
+    end
+
+    it 'is able to evaluate `or` expressions' do
+      exp = parser.parse('true or false')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(true)
+    end
+
+    it 'is able to evaluate `!` expressions' do
+      exp = parser.parse('!false')
+      exp.should be_a Solid::Parser::MethodCall
+      exp.should evaluate_to(true)
+    end
+
+  end
+
 end
