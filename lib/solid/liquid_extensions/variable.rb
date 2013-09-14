@@ -3,7 +3,7 @@ module Solid
     class Variable < ::Liquid::Variable
       extend ClassHighjacker
 
-      def initialize(markup)
+      def initialize(markup, options={})
         super
         @expression = Solid::Parser.parse(@name)
       end
