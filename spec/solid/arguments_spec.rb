@@ -254,7 +254,7 @@ describe Solid::Arguments do
 
     it "should raise a Solid::SyntaxError on unknown constructs" do
       expect {
-        parse('{}[]')
+        parse('{}\[]')
       }.to raise_error(Solid::SyntaxError)
     end
 
