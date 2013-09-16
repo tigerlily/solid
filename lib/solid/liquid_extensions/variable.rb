@@ -4,7 +4,7 @@ module Solid
       extend ClassHighjacker
 
       def initialize(markup, options={})
-        super(markup)
+        super
         @expression = Solid::Parser.parse(@name)
       end
 
