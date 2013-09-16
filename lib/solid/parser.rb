@@ -7,7 +7,11 @@ class Solid::Parser
     autoload :Ripper, File.join(BASE_PATH, 'ripper')
   rescue LoadError
   end
-  autoload :RubyParser, File.join(BASE_PATH, 'ruby_parser')
+  begin
+    require 'ruby_parser'
+    autoload :RubyParser, File.join(BASE_PATH, 'ruby_parser')
+  rescue LoadError
+  end
 
   class ContextVariable < Struct.new(:name)
     def evaluate(context)
@@ -82,7 +86,17 @@ class Solid::Parser
     attr_writer :parser
 
     def parser
-      @parser || Solid::Parser::RubyParser
+      @parser || begin
+        if defined?(Solid::Parser::RubyParser)
+          Solid::Parser::RubyParser
+        elsif defined?(Solid::Parser::Ripper)
+          Solid::Parser::Ripper
+        else
+          raise "You need to run MRI (to have Ripper), "\
+            "or have 'ruby_parser' in $LOAD_PATH "\
+            "or set #{self}.parser yourself"
+        end
+      end
     end
 
     def parse(string)
