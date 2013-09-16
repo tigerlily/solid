@@ -1,5 +1,3 @@
-require 'ripper'
-
 class Solid::Arguments
   include Enumerable
 
